@@ -6,3 +6,5 @@ package-lock.json
 /lib
 /output
 /releases
+yarn.lock
+yarn-error.log

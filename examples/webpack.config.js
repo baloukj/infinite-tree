@@ -80,7 +80,7 @@ const webpackConfig = {
 };
 
 if (process.env.NODE_ENV === 'development') {
-    webpackConfig.devtool = 'eval';
+    webpackConfig.devtool = 'source-map';
 } else {
     webpackConfig.devtool = 'source-map';
     webpackConfig.plugins.push(
