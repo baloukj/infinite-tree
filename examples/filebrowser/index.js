@@ -26,7 +26,7 @@ const setHeaderWidth = () => {
 };
 
 // Update header columns width on window resize
-window.onresize = function() {
+window.onresize = function () {
     debounce(fitHeaderColumns, 150);
 };
 
@@ -41,7 +41,38 @@ const tree = new InfiniteTree(document.querySelector('#filebrowser [data-id="tre
             return false; // Prevent from deselecting the current node
         }
         return true;
-    }
+    },
+    loadNodes: (parentNode, next) => {
+        // Loading
+        const nodes = [];
+        const max = 100000;
+        //nodes.length = 250000;
+        for (let i = 0; i < max; ++i) {
+            //console.log(i);
+            const id = `${parentNode.id}.${i}`;
+            
+            nodes.push({
+                id: id,
+                name: `${parentNode.name}.${i}`,
+                props: {
+                    size: '',
+                    type: 'File Folder',
+                    dateModified: '14/07/2009 11:20:08'
+                },
+                loadOnDemand: true
+            });
+        }
+
+        console.log('end');
+        next(null, nodes, () => {
+            // const childs = parentNode.getChildren();
+            // childs.forEach((n) => {
+            //     // if (n.loadOnDemand) {
+            //     //     tree.openNode(n);
+            //     // }
+            // });
+        });
+    },
 });
 
 tree.on('click', (event) => {
@@ -66,35 +97,35 @@ tree.on('keyDown', (event) => {
         tree.selectNode(nextNode);
     }
 });
-tree.on('keyUp', (event) => {
-    console.log('keyUp', event);
-});
-tree.on('contentWillUpdate', () => {
-    console.log('contentWillUpdate');
-});
-tree.on('contentDidUpdate', () => {
-    console.log('contentDidUpdate');
-    fitHeaderColumns();
-    setHeaderWidth();
-});
-tree.on('openNode', (node) => {
-    console.log('openNode', node);
-});
-tree.on('closeNode', (node) => {
-    console.log('closeNode', node);
-});
-tree.on('selectNode', (node) => {
-    console.log('selectNode', node);
-});
-tree.on('willOpenNode', (node) => {
-    console.log('willOpenNode:', node);
-});
-tree.on('willCloseNode', (node) => {
-    console.log('willCloseNode:', node);
-});
-tree.on('willSelectNode', (node) => {
-    console.log('willSelectNode:', node);
-});
+// tree.on('keyUp', (event) => {
+//     console.log('keyUp', event);
+// });
+// tree.on('contentWillUpdate', () => {
+//     console.log('contentWillUpdate');
+// });
+// tree.on('contentDidUpdate', () => {
+//     console.log('contentDidUpdate');
+//     fitHeaderColumns();
+//     setHeaderWidth();
+// });
+// tree.on('openNode', (node) => {
+//     console.log('openNode', node);
+// });
+// tree.on('closeNode', (node) => {
+//     console.log('closeNode', node);
+// });
+// tree.on('selectNode', (node) => {
+//     console.log('selectNode', node);
+// });
+// tree.on('willOpenNode', (node) => {
+//     console.log('willOpenNode:', node);
+// });
+// tree.on('willCloseNode', (node) => {
+//     console.log('willCloseNode:', node);
+// });
+// tree.on('willSelectNode', (node) => {
+//     console.log('willSelectNode:', node);
+// });
 
 tree.loadData(data);
 

@@ -63,22 +63,23 @@ const renderer = (node, treeOptions) => {
 
     const columnName = tag('td', {
         'class': 'infinite-tree-node nowrap',
-        'style': 'padding-left: ' + depth * 18 + 'px'
+        'style': 'padding-left: ' + depth * 18 + 'px',
+        'width': '45%'
     }, toggler + icon + title + loadingIcon);
     const columnSize = tag('td', {
         'class': 'nowrap',
         'style': 'min-width: 50px',
-        'width': '1%'
+        //'width': '1%'
     }, typeof props.size !== undefined ? props.size : '');
     const columnType = tag('td', {
         'class': 'nowrap',
         'style': 'min-width: 50px',
-        'width': '1%'
+        //'width': '1%'
     }, typeof props.type !== undefined ? props.type : '');
     const columnDate = tag('td', {
         'class': 'nowrap',
         'style': 'min-width: 50px',
-        'width': '1%'
+        //'width': '1%'
     }, typeof props.dateModified !== undefined ? props.dateModified : '');
 
     return tag('tr', {

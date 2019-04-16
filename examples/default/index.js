@@ -65,7 +65,7 @@ const updatePreview = (node) => {
 };
 
 const tree = new InfiniteTree(document.querySelector('#default [data-id="tree"]'), {
-    autoOpen: true, // Defaults to false
+    autoOpen: false, // Defaults to false
     droppable: {
         hoverClass: 'infinite-tree-drop-hover',
         accept: (event, opts) => {
@@ -98,12 +98,12 @@ const tree = new InfiniteTree(document.querySelector('#default [data-id="tree"]'
     loadNodes: (parentNode, next) => {
         // Loading...
         const nodes = [];
-        nodes.length = 10000;
+        nodes.length = 1000;
         for (let i = 0; i < nodes.length; ++i) {
             nodes[i] = {
                 id: `${parentNode.id}.${i}`,
                 name: `${parentNode.name}.${i}`,
-                loadOnDemand: true
+                loadOnDemand: false
             };
         }
 
@@ -270,26 +270,29 @@ tree.on('clusterDidChange', () => {
         return;
     }
 
-    const overlayElement = document.createElement('div');
-    const top = tree.nodes.indexOf(tree.getNodeById('<root>.1'));
-    const bottom = tree.nodes.indexOf(tree.getNodeById('<root>.2'));
-    const el = tree.contentElement.querySelector('.infinite-tree-item');
-    if (!el) {
-        return;
-    }
-    const height = parseFloat(getComputedStyle(el).height);
+    // const overlayElement = document.createElement('div');
+    // const top = tree.nodes.indexOf(tree.getNodeById('<root>.1'));
+    // const bottom = tree.nodes.indexOf(tree.getNodeById('<root>.2'));
+    // const el = tree.contentElement.querySelector('.infinite-tree-item');
+    // if (!el) {
+    //     return;
+    // }
+    // const height = parseFloat(getComputedStyle(el).height);
 
-    overlayElement.className = classNames(
-        'infinite-tree-overlay'
-    );
-    overlayElement.style.top = top * height + 'px';
-    overlayElement.style.height = (bottom - top) * height + 'px';
-    overlayElement.style.lineHeight = (bottom - top) * height + 'px';
-    overlayElement.appendChild(document.createTextNode('OVERLAY'));
-    tree.contentElement.appendChild(overlayElement);
+    // overlayElement.className = classNames(
+    //     'infinite-tree-overlay'
+    // );
+    // overlayElement.style.top = top * height + 'px';
+    // overlayElement.style.height = (bottom - top) * height + 'px';
+    // overlayElement.style.lineHeight = (bottom - top) * height + 'px';
+    // overlayElement.appendChild(document.createTextNode('OVERLAY'));
+    // tree.contentElement.appendChild(overlayElement);
 });
 
 tree.loadData(JSON.parse(JSON.stringify(data)));
+
+//Expand
+const expandAllBtn = document.querySelector('#default button[name="expand-all-btn"]');
 
 // Filter
 const inputTextFilter = document.querySelector('#default input[name="text-filter"]');
@@ -320,6 +323,23 @@ const searchKeyword = (keyword) => {
     });
 };
 
+function expandNode(node) {
+    tree.openNode(node, { updateView: false });
+    const childs = node.getChildren();
+    childs.forEach(element => {
+        expandNode(element);
+    });
+}
+
+addEventListener(expandAllBtn, 'click', (e) => {
+    const root = tree.getRootNode();
+    const childs = root.getChildren();
+    childs.forEach(element => {
+        expandNode(element);
+    });
+
+    tree.update();
+});
 addEventListener(inputCaseSensitive, 'change', (e) => {
     searchKeyword();
 });
@@ -369,7 +389,7 @@ addEventListener(draggableElement, 'dragstart', (e) => {
     document.querySelector('#default [data-id="dropped-result"]').innerHTML = '';
 });
 
-addEventListener(draggableElement, 'dragend', function(e) {
+addEventListener(draggableElement, 'dragend', function (e) {
 });
 
 const load = () => {

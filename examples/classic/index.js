@@ -97,7 +97,7 @@ const tree = new InfiniteTree(document.querySelector('#classic [data-id="tree"]'
     loadNodes: (parentNode, next) => {
         // Loading
         const nodes = [];
-        nodes.length = 10000;
+        nodes.length = 10;
         for (let i = 0; i < nodes.length; ++i) {
             nodes[i] = {
                 id: `${parentNode.id}.${i}`,
@@ -285,7 +285,7 @@ tree.on('clusterDidChange', () => {
     tree.contentElement.appendChild(overlayElement);
 });
 
-tree.loadData(JSON.parse(JSON.stringify(data)));
+//tree.loadData(JSON.parse(JSON.stringify(data)));
 
 // Filter
 const inputTextFilter = document.querySelector('#classic input[name="text-filter"]');

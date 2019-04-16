@@ -14,8 +14,7 @@ module.exports = [
                     type: 'File Folder',
                     dateModified: '14/07/2009 11:20:08'
                 },
-                children: [
-                ]
+                loadOnDemand: true
             },
             {
                 id: '0.1',

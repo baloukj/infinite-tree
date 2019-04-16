@@ -1101,7 +1101,8 @@ class InfiniteTree extends events.EventEmitter {
         const {
             async = false,
             asyncCallback = noop,
-            silent = false
+            silent = false,
+            updateView = true
         } = { ...options };
 
         if (!ensureNodeInstance(node)) {
@@ -1124,6 +1125,7 @@ class InfiniteTree extends events.EventEmitter {
         const nodeIndex = this.nodes.indexOf(node);
 
         const fn = (node) => {
+
             const nodeIndex = this.nodes.indexOf(node);
             node.state.open = true;
 
@@ -1163,7 +1165,9 @@ class InfiniteTree extends events.EventEmitter {
                 this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
 
                 // Update list
-                this.update();
+                if (updateView) {
+                    this.update();
+                }
             }
 
             if (!silent) {
@@ -1286,7 +1290,10 @@ class InfiniteTree extends events.EventEmitter {
         // Update the row corresponding to the node
         this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
         // Update list
-        this.update();
+
+        if (updateView) {
+            this.update();
+        }
 
         if (async) {
             setTimeout(() => fn(node), 0);
