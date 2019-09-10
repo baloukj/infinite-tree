@@ -1212,7 +1212,9 @@ class InfiniteTree extends events.EventEmitter {
             // Update the row corresponding to the node
             this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
             // Update list
-            this.update();
+            if (updateView) {
+                this.update();
+            }
 
             // Do a setTimeout to prevent the CPU intensive task
             setTimeout(() => {
@@ -1816,7 +1818,7 @@ class InfiniteTree extends events.EventEmitter {
         // Retrieve node index
         const nodeIndex = this.nodes.indexOf(node);
         if (nodeIndex >= 0) {
-            const { shallowRendering = false } = { ...options };
+            const { shallowRendering = false, updateView = true } = { ...options };
 
             // Update the row corresponding to the node
             this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
@@ -1830,8 +1832,10 @@ class InfiniteTree extends events.EventEmitter {
                 }
             }
 
-            // Update list
-            this.update();
+            if (updateView) {
+                // Update list
+                this.update();
+            }
         }
     }
 }

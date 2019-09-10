@@ -2013,7 +2013,9 @@ var InfiniteTree = function (_events$EventEmitter) {
             _options2$asyncCallba = _options2.asyncCallback,
             asyncCallback = _options2$asyncCallba === undefined ? noop : _options2$asyncCallba,
             _options2$silent = _options2.silent,
-            silent = _options2$silent === undefined ? false : _options2$silent;
+            silent = _options2$silent === undefined ? false : _options2$silent,
+            _options2$updateView = _options2.updateView,
+            updateView = _options2$updateView === undefined ? true : _options2$updateView;
 
         if (!ensureNodeInstance(node)) {
             return false;
@@ -2035,6 +2037,7 @@ var InfiniteTree = function (_events$EventEmitter) {
         var nodeIndex = this.nodes.indexOf(node);
 
         var fn = function fn(node) {
+
             var nodeIndex = _this6.nodes.indexOf(node);
             node.state.open = true;
 
@@ -2074,7 +2077,9 @@ var InfiniteTree = function (_events$EventEmitter) {
                 _this6.rows[nodeIndex] = _this6.options.rowRenderer(node, _this6.options);
 
                 // Update list
-                _this6.update();
+                if (updateView) {
+                    _this6.update();
+                }
             }
 
             if (!silent) {
@@ -2119,7 +2124,9 @@ var InfiniteTree = function (_events$EventEmitter) {
             // Update the row corresponding to the node
             this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
             // Update list
-            this.update();
+            if (updateView) {
+                this.update();
+            }
 
             // Do a setTimeout to prevent the CPU intensive task
             setTimeout(function () {
@@ -2198,7 +2205,10 @@ var InfiniteTree = function (_events$EventEmitter) {
         // Update the row corresponding to the node
         this.rows[nodeIndex] = this.options.rowRenderer(node, this.options);
         // Update list
-        this.update();
+
+        if (updateView) {
+            this.update();
+        }
 
         if (async) {
             setTimeout(function () {
@@ -2773,7 +2783,9 @@ var InfiniteTree = function (_events$EventEmitter) {
         if (nodeIndex >= 0) {
             var _options5 = _extends({}, options),
                 _options5$shallowRend = _options5.shallowRendering,
-                shallowRendering = _options5$shallowRend === undefined ? false : _options5$shallowRend;
+                shallowRendering = _options5$shallowRend === undefined ? false : _options5$shallowRend,
+                _options5$updateView = _options5.updateView,
+                updateView = _options5$updateView === undefined ? true : _options5$updateView;
 
             // Update the row corresponding to the node
 
@@ -2789,8 +2801,10 @@ var InfiniteTree = function (_events$EventEmitter) {
                 }
             }
 
-            // Update list
-            this.update();
+            if (updateView) {
+                // Update list
+                this.update();
+            }
         }
     };
 
