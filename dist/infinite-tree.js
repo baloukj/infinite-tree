@@ -2480,7 +2480,9 @@ var InfiniteTree = function (_events$EventEmitter) {
             _options4$autoScroll = _options4.autoScroll,
             autoScroll = _options4$autoScroll === undefined ? true : _options4$autoScroll,
             _options4$silent = _options4.silent,
-            silent = _options4$silent === undefined ? false : _options4$silent;
+            silent = _options4$silent === undefined ? false : _options4$silent,
+            _options4$updateView = _options4.updateView,
+            updateView = _options4$updateView === undefined ? true : _options4$updateView;
 
         this.emit('willSelectNode', node);
 
@@ -2505,7 +2507,9 @@ var InfiniteTree = function (_events$EventEmitter) {
                 this.state.selectedNode = null;
 
                 // Update list
-                this.update();
+                if (updateView) {
+                    this.update();
+                }
 
                 if (!silent) {
                     // Emit a "selectNode" event
@@ -2580,7 +2584,9 @@ var InfiniteTree = function (_events$EventEmitter) {
         }
 
         // Update list
-        this.update();
+        if (updateView) {
+            this.update();
+        }
 
         return true;
     };

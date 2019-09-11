@@ -1540,7 +1540,7 @@ class InfiniteTree extends events.EventEmitter {
     // @return {boolean} Returns true on success, false otherwise.
     selectNode(node = null, options) {
         const { selectable, shouldSelectNode } = this.options;
-        const { autoScroll = true, silent = false } = { ...options };
+        const { autoScroll = true, silent = false, updateView = true } = { ...options };
 
         this.emit('willSelectNode', node);
 
@@ -1565,7 +1565,9 @@ class InfiniteTree extends events.EventEmitter {
                 this.state.selectedNode = null;
 
                 // Update list
-                this.update();
+                if (updateView) {
+                    this.update();
+                }
 
                 if (!silent) {
                     // Emit a "selectNode" event
@@ -1640,7 +1642,9 @@ class InfiniteTree extends events.EventEmitter {
         }
 
         // Update list
-        this.update();
+        if (updateView) {
+            this.update();
+        }
 
         return true;
     }
