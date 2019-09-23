@@ -71,6 +71,8 @@ class InfiniteTree extends events.EventEmitter {
         rowRenderer: defaultRowRenderer,
         selectable: true,
         shouldSelectNode: null,
+        rowsInBlock: 50,
+        blocksInCluster: 4,
 
         // When el is not specified, the tree will run in the stealth mode
         el: null,
@@ -371,6 +373,8 @@ class InfiniteTree extends events.EventEmitter {
             this.options.el.appendChild(this.scrollElement);
 
             this.clusterize = new Clusterize({
+                rowsInBlock: this.options.rowsInBlock,
+                blocksInCluster: this.options.blocksInCluster,
                 tag: tag,
                 rows: [],
                 scrollElement: this.scrollElement,
