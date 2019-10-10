@@ -16,7 +16,8 @@ class Clusterize extends EventEmitter {
         tag: null,
         emptyClass: '',
         emptyText: '',
-        keepParity: true
+        keepParity: true,
+        doRender: true
     };
 
     state = {
@@ -318,9 +319,11 @@ class Clusterize extends EventEmitter {
 
             this.emit('clusterWillChange');
 
-            this.setContent(layout.join(''));
+            if (this.options.doRender) {
+                this.setContent(layout.join(''));
+            }
 
-            this.emit('clusterDidChange');
+            this.emit('clusterDidChange', layout.join(''));
         } else if (bottomOffsetChanged) {
             this.contentElement.lastChild.style.height = bottomOffset + 'px';
         }

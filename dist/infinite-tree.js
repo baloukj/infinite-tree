@@ -930,6 +930,8 @@ var InfiniteTree = function (_events$EventEmitter) {
             shouldSelectNode: null,
             rowsInBlock: 50,
             blocksInCluster: 4,
+            updateViewOnSelect: true,
+            doRender: true,
 
             // When el is not specified, the tree will run in the stealth mode
             el: null,
@@ -1021,7 +1023,7 @@ var InfiniteTree = function (_events$EventEmitter) {
                         return;
                     }
 
-                    _this.selectNode(node); // selectNode will re-render the tree
+                    _this.selectNode(node, { updateView: _this.options.updateViewOnSelect }); // selectNode will re-render the tree
                 }, 0);
             },
             'dblclick': function dblclick(event) {
@@ -1229,14 +1231,15 @@ var InfiniteTree = function (_events$EventEmitter) {
                 scrollElement: this.scrollElement,
                 contentElement: this.contentElement,
                 emptyText: this.options.noDataText,
-                emptyClass: this.options.noDataClass
+                emptyClass: this.options.noDataClass,
+                doRender: this.options.doRender
             });
 
             this.clusterize.on('clusterWillChange', function () {
                 _this2.emit('clusterWillChange');
             });
-            this.clusterize.on('clusterDidChange', function () {
-                _this2.emit('clusterDidChange');
+            this.clusterize.on('clusterDidChange', function (content) {
+                _this2.emit('clusterDidChange', content);
             });
 
             (0, _dom.addEventListener)(this.contentElement, 'click', this.contentListener.click);
@@ -3178,7 +3181,8 @@ var Clusterize = function (_EventEmitter) {
             tag: null,
             emptyClass: '',
             emptyText: '',
-            keepParity: true
+            keepParity: true,
+            doRender: true
         };
         _this.state = {
             lastClusterIndex: -1,
@@ -3479,9 +3483,11 @@ var Clusterize = function (_EventEmitter) {
 
             this.emit('clusterWillChange');
 
-            this.setContent(layout.join(''));
+            if (this.options.doRender) {
+                this.setContent(layout.join(''));
+            }
 
-            this.emit('clusterDidChange');
+            this.emit('clusterDidChange', layout.join(''));
         } else if (bottomOffsetChanged) {
             this.contentElement.lastChild.style.height = bottomOffset + 'px';
         }

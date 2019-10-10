@@ -73,6 +73,8 @@ class InfiniteTree extends events.EventEmitter {
         shouldSelectNode: null,
         rowsInBlock: 50,
         blocksInCluster: 4,
+        updateViewOnSelect: true,
+        doRender: true,
 
         // When el is not specified, the tree will run in the stealth mode
         el: null,
@@ -175,7 +177,7 @@ class InfiniteTree extends events.EventEmitter {
                     return;
                 }
 
-                this.selectNode(node); // selectNode will re-render the tree
+                this.selectNode(node, { updateView: this.options.updateViewOnSelect }); // selectNode will re-render the tree
             }, 0);
         },
         'dblclick': (event) => {
@@ -380,14 +382,15 @@ class InfiniteTree extends events.EventEmitter {
                 scrollElement: this.scrollElement,
                 contentElement: this.contentElement,
                 emptyText: this.options.noDataText,
-                emptyClass: this.options.noDataClass
+                emptyClass: this.options.noDataClass,
+                doRender: this.options.doRender
             });
 
             this.clusterize.on('clusterWillChange', () => {
                 this.emit('clusterWillChange');
             });
-            this.clusterize.on('clusterDidChange', () => {
-                this.emit('clusterDidChange');
+            this.clusterize.on('clusterDidChange', (content) => {
+                this.emit('clusterDidChange', content);
             });
 
             addEventListener(this.contentElement, 'click', this.contentListener.click);
