@@ -7,6 +7,15 @@ Demo: http://cheton.github.io/infinite-tree
 
 [![infinite-tree](https://raw.githubusercontent.com/cheton/infinite-tree/master/media/infinite-tree.gif)](http://cheton.github.io/infinite-tree)
 
+ ## HOW TO BUILD
+ run: npm run build
+ then: npm run dist
+
+ It will generate two files in /dist
+
+ ## HOW TO TEST
+ run npm run dev to launch a webpack dev server
+
 ## Features
 * High performance infinite scroll with large data set
 * [Customizable renderer](https://github.com/cheton/infinite-tree/wiki/Options#rowrenderer) to render the tree in any form
